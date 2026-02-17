@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ContractorQuote Pro</title>
+    <title>ArgoQuote Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,12 +28,12 @@
         
         .app-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 420px 1fr;
             min-height: 100vh;
         }
         
         .input-panel {
-            padding: 40px;
+            padding: 24px;
             background: white;
             overflow-y: auto;
             max-height: 100vh;
@@ -42,38 +42,37 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 32px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
         .logo-icon {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             background: var(--primary);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 16px;
         }
         
-        .logo-text { font-size: 24px; font-weight: 700; color: var(--dark); }
-        .tagline { color: var(--gray); font-size: 14px; margin-top: 4px; }
+        .logo-text { font-size: 20px; font-weight: 700; color: var(--dark); }
         
-        h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--dark); }
+        h2 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--dark); text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .input-group { margin-bottom: 20px; }
+        .input-group { margin-bottom: 16px; }
         
-        label { display: block; font-size: 14px; font-weight: 500; color: var(--gray); margin-bottom: 8px; }
+        label { display: block; font-size: 13px; font-weight: 500; color: var(--gray); margin-bottom: 6px; }
         
         input, textarea, select {
             width: 100%;
-            padding: 14px 16px;
+            padding: 10px 12px;
             border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 15px;
+            border-radius: 8px;
+            font-size: 14px;
             font-family: inherit;
         }
         
@@ -82,15 +81,42 @@
             border-color: var(--primary);
         }
         
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        
+        .category-tab {
+            padding: 8px 12px;
+            background: var(--light);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .category-tab:hover { border-color: var(--primary); }
+        
+        .category-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
         /* Photo Upload */
         .photo-upload-zone {
             border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 10px;
+            padding: 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
             background: var(--light);
+            margin-bottom: 16px;
         }
         
         .photo-upload-zone:hover {
@@ -98,40 +124,19 @@
             background: #eff6ff;
         }
         
-        .photo-upload-zone.dragover {
-            border-color: var(--primary);
-            background: #dbeafe;
-        }
-        
-        .upload-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
-        
-        .upload-text {
-            color: var(--gray);
-            font-size: 14px;
-        }
-        
-        .upload-text strong {
-            color: var(--primary);
-        }
-        
-        #photoInput {
-            display: none;
-        }
+        #photoInput { display: none; }
         
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 12px;
         }
         
         .photo-preview {
             position: relative;
             aspect-ratio: 1;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             background: var(--light);
         }
@@ -144,102 +149,69 @@
         
         .photo-remove {
             position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 24px;
-            height: 24px;
+            top: 2px;
+            right: 2px;
+            width: 20px;
+            height: 20px;
             background: rgba(0,0,0,0.7);
             color: white;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 12px;
         }
         
-        .photo-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            font-size: 10px;
-            padding: 4px;
-            text-align: center;
-        }
-        
-        .ai-analysis {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
+        /* Scope Builder */
+        .scope-builder {
+            background: var(--light);
             border-radius: 10px;
             padding: 14px;
-            margin-top: 12px;
-            font-size: 13px;
-            color: #166534;
-            display: none;
+            margin-bottom: 16px;
         }
         
-        .ai-analysis.active { display: block; }
-        
-        .finish-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 12px;
-        }
-        
-        .finish-chip {
-            padding: 10px 14px;
-            background: var(--light);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s;
-        }
-        
-        .finish-chip:hover { border-color: var(--primary); }
-        
-        .finish-chip.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
-        .generate-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
+        .scope-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 20px;
+            padding: 8px 10px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            border: 1px solid var(--border);
         }
         
-        .generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        .scope-item:last-child { margin-bottom: 0; }
+        
+        .scope-label { font-size: 13px; }
+        
+        .scope-input {
+            width: 80px;
+            padding: 6px 8px;
+            text-align: right;
+            font-size: 13px;
         }
         
-        /* Rates Section */
+        .scope-qty {
+            width: 50px;
+            padding: 6px 8px;
+            text-align: center;
+            font-size: 13px;
+            margin-right: 8px;
+        }
+        
+        .scope-unit {
+            font-size: 11px;
+            color: var(--gray);
+            margin-right: 8px;
+        }
+        
+        /* Rate Editor */
         .rates-section {
             background: #fef3c7;
             border: 1px solid #fcd34d;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 16px;
         }
         
         .rates-header {
@@ -249,32 +221,33 @@
             cursor: pointer;
         }
         
-        .rates-header h3 { font-size: 14px; color: #92400e; }
+        .rates-header h3 { font-size: 13px; color: #92400e; }
         
-        .rates-content { display: none; margin-top: 12px; }
+        .rates-content { display: none; }
         .rates-content.open { display: block; }
         
         .rate-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 6px 0;
             border-bottom: 1px solid #fcd34d;
+            font-size: 12px;
         }
         
         .rate-row:last-child { border-bottom: none; }
-        .rate-label { font-size: 13px; color: #78350f; }
+        .rate-label { color: #78350f; }
         
         .rate-input {
-            width: 80px;
-            padding: 6px 10px;
-            font-size: 13px;
+            width: 70px;
+            padding: 4px 8px;
+            font-size: 12px;
             text-align: right;
         }
         
         /* Quote Panel */
         .quote-panel {
-            padding: 40px;
+            padding: 32px;
             background: #0f172a;
             color: white;
             overflow-y: auto;
@@ -285,65 +258,86 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
-        .quote-title { font-size: 28px; font-weight: 700; }
-        .quote-date { color: var(--gray); font-size: 14px; }
+        .quote-title { font-size: 24px; font-weight: 700; }
+        .quote-date { color: var(--gray); font-size: 13px; }
         .quote-badge {
             background: var(--success);
             color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 11px;
             font-weight: 600;
         }
         
-        .quote-badge.photo {
-            background: var(--warning);
+        .quote-photos {
+            margin-bottom: 20px;
         }
         
-        .line-items { margin-bottom: 30px; }
-        
-        .line-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .item-category {
+        .quote-photos h4 {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--gray);
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
         
-        .item-name { font-size: 14px; color: rgba(255,255,255,0.8); }
-        .item-price { font-size: 15px; font-weight: 600; }
+        .quote-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+        }
+        
+        .quote-photo-grid img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .line-items { margin-bottom: 24px; }
+        
+        .line-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .item-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: 2px;
+        }
+        
+        .item-name { font-size: 13px; color: rgba(255,255,255,0.8); }
+        .item-price { font-size: 14px; font-weight: 600; }
         
         .totals {
             background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
         }
         
         .total-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            font-size: 14px;
+            padding: 8px 0;
+            font-size: 13px;
         }
         
         .total-row.grand {
             border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 10px;
-            padding-top: 16px;
-            font-size: 20px;
+            margin-top: 8px;
+            padding-top: 12px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--success);
         }
@@ -351,19 +345,19 @@
         .actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
         
         .action-btn {
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .action-btn.primary { background: var(--success); color: white; border: none; }
@@ -378,13 +372,13 @@
         .generating.active { display: block; }
         
         .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 16px;
         }
         
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -393,32 +387,6 @@
             text-align: center;
             padding: 60px 20px;
             color: var(--gray);
-        }
-        
-        /* Photo Gallery in Quote */
-        .quote-photos {
-            margin-bottom: 20px;
-        }
-        
-        .quote-photos h4 {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--gray);
-            margin-bottom: 10px;
-        }
-        
-        .quote-photo-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-        }
-        
-        .quote-photo-grid img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 6px;
         }
         
         @media (max-width: 900px) {
@@ -431,95 +399,51 @@
         <!-- Input Panel -->
         <div class="input-panel">
             <div class="logo">
-                <div class="logo-icon">CQ</div>
-                <div>
-                    <div class="logo-text">ContractorQuote</div>
-                    <div class="tagline">AI-Powered Estimates in Seconds</div>
-                </div>
+                <div class="logo-icon">AQ</div>
+                <div class="logo-text">ArgoQuote Pro</div>
             </div>
             
-            <div class="input-group">
-                <label>📸 Site Photos</label>
-                <div class="photo-upload-zone" id="uploadZone">
-                    <div class="upload-icon">📷</div>
-                    <div class="upload-text">
-                        <strong>Click to upload</strong> or drag & drop<br>
-                        JPG, PNG up to 10MB each
-                    </div>
-                </div>
-                <input type="file" id="photoInput" multiple accept="image/*">
-                <div class="photo-grid" id="photoGrid"></div>
-                <div class="ai-analysis" id="aiAnalysis">
-                    <strong>🤖 AI Analysis:</strong> <span id="analysisText">Analyzing photos...</span>
-                </div>
+            <!-- Category Tabs -->
+            <div class="category-tabs" id="categoryTabs">
+                <div class="category-tab active" data-cat="kitchen">Kitchen</div>
+                <div class="category-tab" data-cat="bathroom">Bathroom</div>
+                <div class="category-tab" data-cat="adu">ADU</div>
+                <div class="category-tab" data-cat="remodel">Remodel</div>
+                <div class="category-tab" data-cat="newbuild">New Build</div>
             </div>
             
+            <!-- Photo Upload -->
+            <div class="photo-upload-zone" id="uploadZone">
+                <div style="font-size:24px;margin-bottom:8px;">📷</div>
+                <div style="font-size:12px;color:var(--gray);">Click or drag photos</div>
+            </div>
+            <input type="file" id="photoInput" multiple accept="image/*">
+            <div class="photo-grid" id="photoGrid"></div>
+            
+            <!-- Project Details -->
             <div class="input-group">
                 <label>Project Name</label>
-                <input type="text" id="projectName" placeholder="e.g., Smith Patio Renovation">
+                <input type="text" id="projectName" placeholder="e.g., Smith Kitchen Remodel">
             </div>
             
+            <!-- Scope Builder -->
+            <div class="scope-builder" id="scopeBuilder">
+                <!-- Populated by JavaScript based on category -->
+            </div>
+            
+            <!-- Additional Notes -->
             <div class="input-group">
-                <label>Describe the Work</label>
-                <textarea id="workDescription" placeholder="e.g., Build 200 sqft concrete patio with stamped finish, demo old slab"></textarea>
+                <label>Additional Details</label>
+                <textarea id="notes" rows="2" placeholder="Any additional details..."></textarea>
             </div>
             
-            <div class="input-group">
-                <label>Location</label>
-                <select id="region" onchange="updateRegionLabel()">
-                    <option value="bayarea">🏔️ Bay Area / Santa Cruz, CA</option>
-                    <option value="west">West Coast (CA, OR, WA)</option>
-                    <option value="southwest">Southwest (AZ, TX, NM)</option>
-                    <option value="mountain">Mountain (CO, UT, NV)</option>
-                    <option value="midwest">Midwest (IL, OH, MI)</option>
-                    <option value="east">East Coast (NY, PA, FL)</option>
-                </select>
-            </div>
-            
-            <!-- Editable Rates -->
+            <!-- Rates Editor -->
             <div class="rates-section">
                 <div class="rates-header" onclick="toggleRates()">
-                    <h3>⚙️ Edit Pricing Rates</h3>
+                    <h3>⚙️ Edit Rates (Bay Area 2026)</h3>
                     <span>▼</span>
                 </div>
-                <div class="rates-content" id="ratesContent">
-                    <div class="rate-row">
-                        <span class="rate-label">Concrete ($/sqft)</span>
-                        <input type="number" class="rate-input" id="rateConcrete" value="14">
-                    </div>
-                    <div class="rate-row">
-                        <span class="rate-label">Demo ($/sqft)</span>
-                        <input type="number" class="rate-input" id="rateDemo" value="10">
-                    </div>
-                    <div class="rate-row">
-                        <span class="rate-label">Labor ($/hr)</span>
-                        <input type="number" class="rate-input" id="rateLabor" value="85">
-                    </div>
-                    <div class="rate-row">
-                        <span class="rate-label">Deck Framing ($/sqft)</span>
-                        <input type="number" class="rate-input" id="rateDeck" value="18">
-                    </div>
-                    <div class="rate-row">
-                        <span class="rate-label">Stamped ($/sqft)</span>
-                        <input type="number" class="rate-input" id="rateStamped" value="6">
-                    </div>
-                    <div class="rate-row">
-                        <span class="rate-label">Base ($/sqft)</span>
-                        <input type="number" class="rate-input" id="rateBase" value="3">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="input-group">
-                <label>Add Custom Finishes</label>
-                <div class="finish-options">
-                    <div class="finish-chip" data-finish="stamped">Stamped</div>
-                    <div class="finish-chip" data-finish="stained">Stained</div>
-                    <div class="finish-chip" data-finish="exposed">Exposed Agg</div>
-                    <div class="finish-chip" data-finish="polished">Polished</div>
-                    <div class="finish-chip" data-finish="sealed">Sealed</div>
-                    <div class="finish-chip" data-finish="colored">Colored</div>
-                </div>
+                <div class="rates-content" id="ratesContent"></div>
             </div>
             
             <div class="input-group">
@@ -527,8 +451,8 @@
                 <input type="number" id="markup" value="25" min="0" max="100">
             </div>
             
-            <button class="generate-btn" onclick="generateQuote()">
-                <span>⚡</span> Generate Quote
+            <button class="action-btn primary" style="width:100%;padding:14px;" onclick="generateQuote()">
+                ⚡ Generate Quote
             </button>
         </div>
         
@@ -543,13 +467,13 @@
             </div>
             
             <div class="empty-state" id="emptyState">
-                <div style="font-size:48px;margin-bottom:16px;">📋</div>
-                <p>Upload photos & describe work, then click Generate</p>
+                <div style="font-size:40px;margin-bottom:12px;">📋</div>
+                <p>Select category, add scope items, click Generate</p>
             </div>
             
             <div class="generating" id="generating">
                 <div class="spinner"></div>
-                <p>Analyzing project...</p>
+                <p>Generating quote...</p>
             </div>
             
             <div id="quoteContent" style="display:none;">
@@ -567,49 +491,122 @@
     <script>
         // State
         let photos = [];
+        let currentCategory = 'kitchen';
         
-        // Set today's date
+        // Bay Area 2026 Rates
+        const ratesDB = {
+            kitchen: {
+                'Cabinetry (custom)': { rate: 800, unit: 'lf', desc: 'Custom cabinets' },
+                'Cabinetry (RTA)': { rate: 300, unit: 'lf', desc: 'Ready-to-assemble' },
+                'Countertops (quartz)': { rate: 85, unit: 'sqft', desc: 'Quartz slabs' },
+                'Countertops (granite)': { rate: 75, unit: 'sqft', desc: 'Granite' },
+                'Backsplash (tile)': { rate: 35, unit: 'sqft', desc: 'Tile installation' },
+                'Backsplash (mosaic)': { rate: 50, unit: 'sqft', desc: 'Mosaic/glass' },
+                'Appliances': { rate: 8000, unit: 'unit', desc: 'Mid-range package' },
+                'Plumbing (fixture)': { rate: 500, unit: 'ea', desc: 'Sink, faucet install' },
+                'Electrical': { rate: 2500, unit: 'job', desc: 'Outlets, lighting' },
+                'Flooring': { rate: 12, unit: 'sqft', desc: 'Hardwood/luxury vinyl' },
+                'Painting': { rate: 4, unit: 'sqft', desc: 'Walls + trim' },
+                'Permits': { rate: 0.03, unit: 'percent', desc: '% of construction' }
+            },
+            bathroom: {
+                ' Vanity': { rate: 1200, unit: 'ea', desc: 'Vanity + mirror' },
+                'Countertop': { rate: 2500, unit: 'unit', desc: 'Stone top + install' },
+                'Toilet': { rate: 650, unit: 'ea', desc: 'New toilet install' },
+                'Shower/tub': { rate: 4500, unit: 'ea', desc: 'Tile/glass enclosure' },
+                'Tile (floor)': { rate: 18, unit: 'sqft', desc: 'Floor tile install' },
+                'Tile (walls)': { rate: 22, unit: 'sqft', desc: 'Wall tile install' },
+                'Plumbing': { rate: 2000, unit: 'job', desc: 'Relocation/repipe' },
+                'Electrical': { rate: 1200, unit: 'job', desc: 'Lights, fan, outlets' },
+                'Ventilation': { rate: 800, unit: 'ea', desc: 'Exhaust fan' },
+                'Painting': { rate: 4, unit: 'sqft', desc: 'Walls + ceiling' },
+                'Permits': { rate: 0.03, unit: 'percent', desc: '% of construction' }
+            },
+            adu: {
+                'New Construction': { rate: 300, unit: 'sqft', desc: 'Stick-built' },
+                'Prefab ADU': { rate: 200, unit: 'sqft', desc: 'Prefabricated' },
+                'Garage Conversion': { rate: 175, unit: 'sqft', desc: 'Convert existing' },
+                'Electrical': { rate: 20, unit: 'sqft', desc: 'Full electrical' },
+                'Plumbing': { rate: 18, unit: 'sqft', desc: 'Full plumbing' },
+                'HVAC': { rate: 12, unit: 'sqft', desc: 'Heat/AC' },
+                'Insulation': { rate: 4, unit: 'sqft', desc: 'Full insulation' },
+                'Drywall': { rate: 8, unit: 'sqft', desc: 'Finish walls' },
+                'Flooring': { rate: 12, unit: 'sqft', desc: 'Hardwood/tile' },
+                'Kitchen': { rate: 15000, unit: 'unit', desc: 'Full kitchen install' },
+                'Bathroom': { rate: 12000, unit: 'unit', desc: 'Full bath install' },
+                'Permits': { rate: 0.04, unit: 'percent', desc: '% of construction' },
+                'Impact Fees': { rate: 15000, unit: 'unit', desc: 'City impact fees' }
+            },
+            remodel: {
+                'Full Demolition': { rate: 8, unit: 'sqft', desc: 'Strip to studs' },
+                'Framing': { rate: 12, unit: 'sqft', desc: 'Structural changes' },
+                'Electrical': { rate: 15, unit: 'sqft', desc: 'Rewire' },
+                'Plumbing': { rate: 12, unit: 'sqft', desc: 'Repipe' },
+                'HVAC': { rate: 10, unit: 'sqft', desc: 'New ducting' },
+                'Insulation': { rate: 4, unit: 'sqft', desc: 'R-30+ insulation' },
+                'Drywall': { rate: 8, unit: 'sqft', desc: 'Hang + finish' },
+                'Flooring': { rate: 12, unit: 'sqft', desc: 'Hardwood/tile/LVP' },
+                'Paint (interior)': { rate: 4, unit: 'sqft', desc: 'Walls + trim' },
+                'Kitchen': { rate: 40000, unit: 'unit', desc: 'Mid-range kitchen' },
+                'Bathroom': { rate: 15000, unit: 'unit', desc: 'Full bath' },
+                'Windows': { rate: 800, unit: 'ea', desc: 'New windows' },
+                'Doors': { rate: 600, unit: 'ea', desc: 'Interior + exterior' },
+                'Permits': { rate: 0.03, unit: 'percent', desc: '% of construction' }
+            },
+            newbuild: {
+                'Foundation': { rate: 35, unit: 'sqft', desc: 'Concrete slab' },
+                'Framing': { rate: 45, unit: 'sqft', desc: 'Wood frame' },
+                'Roofing': { rate: 12, unit: 'sqft', desc: 'Composition shingles' },
+                'Electrical': { rate: 18, unit: 'sqft', desc: 'Full wire + panel' },
+                'Plumbing': { rate: 15, unit: 'sqft', desc: 'Full rough + finish' },
+                'HVAC': { rate: 10, unit: 'sqft', desc: 'Central AC/heat' },
+                'Insulation': { rate: 4, unit: 'sqft', desc: 'Full house' },
+                'Drywall': { rate: 8, unit: 'sqft', desc: 'Hang + finish' },
+                'Exterior Siding': { rate: 12, unit: 'sqft', desc: 'Stucco/siding' },
+                'Paint (exterior)': { rate: 3, unit: 'sqft', desc: 'Full exterior' },
+                'Paint (interior)': { rate: 4, unit: 'sqft', desc: 'Walls + trim' },
+                'Flooring': { rate: 12, unit: 'sqft', desc: 'Hardwood/tile' },
+                'Kitchen': { rate: 50000, unit: 'unit', desc: 'Full kitchen' },
+                'Bathrooms': { rate: 25000, unit: 'unit', desc: '2 bath home' },
+                'Garage': { rate: 45, unit: 'sqft', desc: 'Attached garage' },
+                'Landscaping': { rate: 8, unit: 'sqft', desc: 'Basic landscaping' },
+                'Permits': { rate: 0.04, unit: 'percent', desc: '% of construction' },
+                'Impact Fees 25000,': { rate: unit: 'unit', desc: 'City fees' }
+            }
+        };
+        
+        // Set date
         document.getElementById('quoteDate').textContent = new Date().toLocaleDateString('en-US', {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
         
-        // Photo upload handling
+        // Category tabs
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentCategory = tab.dataset.cat;
+                renderScopeBuilder();
+            });
+        });
+        
+        // Photo upload
         const uploadZone = document.getElementById('uploadZone');
         const photoInput = document.getElementById('photoInput');
         
         uploadZone.addEventListener('click', () => photoInput.click());
-        
-        uploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadZone.classList.add('dragover');
-        });
-        
-        uploadZone.addEventListener('dragleave', () => {
-            uploadZone.classList.remove('dragover');
-        });
-        
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadZone.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
-        });
-        
-        photoInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.style.borderColor = 'var(--primary)'; });
+        uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = 'var(--border)'; });
+        uploadZone.addEventListener('drop', (e) => { e.preventDefault(); uploadZone.style.borderColor = 'var(--border)'; handleFiles(e.dataTransfer.files); });
+        photoInput.addEventListener('change', (e) => handleFiles(e.target.files));
         
         function handleFiles(files) {
             Array.from(files).forEach(file => {
                 if (!file.type.startsWith('image/')) return;
-                
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    photos.push({
-                        name: file.name,
-                        data: e.target.result
-                    });
+                    photos.push({ name: file.name, data: e.target.result });
                     renderPhotos();
-                    analyzePhotos();
                 };
                 reader.readAsDataURL(file);
             });
@@ -620,154 +617,120 @@
             grid.innerHTML = photos.map((p, i) => `
                 <div class="photo-preview">
                     <img src="${p.data}" alt="Site photo">
-                    <button class="photo-remove" onclick="removePhoto(${i})">×</button>
+                    <button class="photo-remove" onclick="photos.splice(${i},1);renderPhotos()">×</button>
                 </div>
             `).join('');
         }
         
-        function removePhoto(index) {
-            photos.splice(index, 1);
-            renderPhotos();
-            analyzePhotos();
+        function renderScopeBuilder() {
+            const builder = document.getElementById('scopeBuilder');
+            const items = ratesDB[currentCategory];
+            
+            builder.innerHTML = Object.entries(items).map(([name, data]) => `
+                <div class="scope-item">
+                    <span class="scope-label">${name}</span>
+                    <div style="display:flex;align-items:center;">
+                        <input type="number" class="scope-qty" data-item="${name}" value="${getDefaultQty(name)}" min="0">
+                        <span class="scope-unit">${data.unit}</span>
+                        <input type="number" class="scope-input" data-rate="${name}" value="${data.rate}" step="${data.rate < 1 ? 0.01 : 1}">
+                    </div>
+                </div>
+            `).join('');
+            
+            renderRatesEditor();
         }
         
-        // Simulated AI analysis (in production, this would call an AI API)
-        function analyzePhotos() {
-            const analysis = document.getElementById('aiAnalysis');
-            const text = document.getElementById('analysisText');
-            
-            if (photos.length === 0) {
-                analysis.classList.remove('active');
-                return;
-            }
-            
-            analysis.classList.add('active');
-            
-            // Simulated analysis based on photo count
-            const observations = [];
-            if (photos.length >= 1) observations.push("Site access confirmed");
-            if (photos.length >= 3) observations.push("Multiple angles captured");
-            if (photos.length >= 5) observations.push("Detailed documentation");
-            
-            // Random observations to simulate AI
-            const possibleNotes = [
-                "Concrete work visible - area appears level",
-                "Existing structure will require demo",
-                "Access looks adequate for equipment",
-                "Photos show good detail for estimate",
-                "Recommend measuring for exact sqft"
-            ];
-            
-            const randomNote = possibleNotes[Math.floor(Math.random() * possibleNotes.length)];
-            text.textContent = `${observations.join(', ')}. ${randomNote}`;
+        function getDefaultQty(name) {
+            const defaults = {
+                'Cabinetry (custom)': 20,
+                'Cabinetry (RTA)': 20,
+                'Countertops (quartz)': 40,
+                'Countertops (granite)': 40,
+                'Backsplash (tile)': 40,
+                'Backsplash (mosaic)': 30,
+                'Vanity': 1,
+                'Toilet': 1,
+                'Shower/tub': 1,
+                'Tile (floor)': 30,
+                'Tile (walls)': 80,
+                'New Construction': 1000,
+                'Prefab ADU': 600,
+                'Garage Conversion': 500,
+                'Kitchen': 1,
+                'Bathroom': 1,
+                'Bathrooms': 2,
+                'Electrical': 2000,
+                'Plumbing': 1500,
+                'HVAC': 1500,
+                'Framing': 2000,
+                'Full Demolition': 2000,
+                'Flooring': 2000,
+                'Paint (interior)': 2500,
+                'Paint (exterior)': 3000,
+                'Windows': 8,
+                'Doors': 6,
+                'Foundation': 2000,
+                'Roofing': 2500,
+                'Insulation': 2000,
+                'Drywall': 2500,
+                'Exterior Siding': 2500,
+                'Garage': 400,
+                'Landscaping': 2000,
+                'Permits': 1,
+                'Impact Fees': 1,
+                'Appliances': 1,
+                'Plumbing (fixture)': 1,
+                'Backsplash': 40,
+                'Ventilation': 1
+            };
+            return defaults[name] || 1;
         }
         
-        // Finish chip selection
-        document.querySelectorAll('.finish-chip').forEach(chip => {
-            chip.addEventListener('click', () => chip.classList.toggle('selected'));
-        });
+        function renderRatesEditor() {
+            const container = document.getElementById('ratesContent');
+            const items = ratesDB[currentCategory];
+            
+            container.innerHTML = Object.entries(items).map(([name, data]) => `
+                <div class="rate-row">
+                    <span class="rate-label">${name}</span>
+                    <input type="number" class="rate-input" data-edit-rate="${name}" value="${data.rate}" step="${data.rate < 1 ? 0.01 : 1}">
+                </div>
+            `).join('');
+            
+            // Update scope inputs when rates change
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const name = e.target.dataset.editRate;
+                    const newRate = parseFloat(e.target.value);
+                    document.querySelector(`[data-rate="${name}"]`).value = newRate;
+                });
+            });
+        }
         
         function toggleRates() {
             document.getElementById('ratesContent').classList.toggle('open');
         }
         
-        function updateRegionLabel() {
-            const region = document.getElementById('region').value;
-            const rates = getBayAreaRates();
+        function generateQuote() {
+            const projectName = document.getElementById('projectName').value || 'Unnamed Project';
+            const markup = parseFloat(document.getElementById('markup').value) || 25;
             
-            if (region === 'bayarea') {
-                document.getElementById('rateConcrete').value = rates.concrete;
-                document.getElementById('rateDemo').value = rates.demo;
-                document.getElementById('rateLabor').value = rates.labor;
-                document.getElementById('rateDeck').value = rates.deck;
-                document.getElementById('rateStamped').value = rates.stamped;
-                document.getElementById('rateBase').value = rates.base;
-            }
-        }
-        
-        function getBayAreaRates() {
-            return {
-                concrete: 16,
-                demo: 12,
-                labor: 95,
-                deck: 22,
-                stamped: 8,
-                base: 4
-            };
-        }
-        
-        function parseDescription(text) {
+            // Collect scope items
             const items = [];
-            const lower = text.toLowerCase();
-            
-            const rates = {
-                concrete: parseFloat(document.getElementById('rateConcrete').value) || 14,
-                demo: parseFloat(document.getElementById('rateDemo').value) || 10,
-                labor: parseFloat(document.getElementById('rateLabor').value) || 85,
-                deck: parseFloat(document.getElementById('rateDeck').value) || 18,
-                stamped: parseFloat(document.getElementById('rateStamped').value) || 6,
-                base: parseFloat(document.getElementById('rateBase').value) || 3,
-            };
-            
-            // Parse quantities
-            const sqftMatch = text.match(/(\d+)\s*(?:sqft|sq\.?\s*ft|square\s*feet?)/i);
-            const sqft = sqftMatch ? parseInt(sqftMatch[1]) : 100;
-            
-            const hasDemo = /demo|tear|remove|rip/i.test(lower);
-            const hasDeck = /deck|platform|porch/i.test(lower);
-            const hasDrainage = /drain|water/i.test(lower);
-            
-            // Concrete items
-            if (/concrete|patio|slab|walkway|foundation/i.test(lower)) {
-                if (hasDemo || sqft > 50) {
-                    items.push({ category: 'Concrete', name: 'Demolition', qty: sqft, rate: rates.demo });
-                }
-                items.push({ category: 'Concrete', name: 'Concrete Pour', qty: sqft, rate: rates.concrete });
-                items.push({ category: 'Concrete', name: 'Base Material', qty: sqft, rate: rates.base });
-                items.push({ category: 'Concrete', name: 'Rebar', qty: sqft, rate: 3 });
-                items.push({ category: 'Concrete', name: 'Forms & Setup', qty: sqft, rate: 4 });
-            }
-            
-            // Deck items
-            if (hasDeck) {
-                items.push({ category: 'Deck', name: 'Framing', qty: sqft, rate: rates.deck });
-                items.push({ category: 'Deck', name: 'Decking', qty: sqft, rate: rates.deck + 5 });
-            }
-            
-            // Finish items
-            document.querySelectorAll('.finish-chip.selected').forEach(chip => {
-                const finish = chip.dataset.finish;
-                const finishRates = {
-                    stamped: rates.stamped,
-                    stained: 4,
-                    exposed: 8,
-                    polished: 10,
-                    colored: 3,
-                    sealed: 2
-                };
-                if (finishRates[finish]) {
-                    items.push({ category: 'Finishes', name: chip.textContent, qty: sqft, rate: finishRates[finish] });
+            document.querySelectorAll('.scope-item').forEach(item => {
+                const qtyInput = item.querySelector('.scope-qty');
+                const rateInput = item.querySelector('.scope-input');
+                const name = qtyInput.dataset.item;
+                const qty = parseFloat(qtyInput.value) || 0;
+                const rate = parseFloat(rateInput.value) || 0;
+                
+                if (qty > 0) {
+                    items.push({ name, qty, rate, category: currentCategory });
                 }
             });
             
-            // Drainage
-            if (hasDrainage) {
-                items.push({ category: 'Site Work', name: 'Drainage System', qty: 1, rate: 800 });
-            }
-            
-            // Labor
-            const laborHours = Math.ceil(sqft / 20);
-            items.push({ category: 'Labor', name: 'Labor', qty: laborHours, rate: rates.labor });
-            
-            return items;
-        }
-        
-        function generateQuote() {
-            const description = document.getElementById('workDescription').value;
-            const markup = parseInt(document.getElementById('markup').value) || 25;
-            
-            if (!description && photos.length === 0) {
-                alert('Please add photos or describe the work');
+            if (items.length === 0 && photos.length === 0) {
+                alert('Add scope items or photos');
                 return;
             }
             
@@ -776,7 +739,7 @@
             document.getElementById('quoteContent').style.display = 'none';
             
             setTimeout(() => {
-                // Show photos in quote if uploaded
+                // Photos
                 const quotePhotos = document.getElementById('quotePhotos');
                 const badge = document.getElementById('quoteBadge');
                 
@@ -787,16 +750,13 @@
                             ${photos.map(p => `<img src="${p.data}" alt="Site photo">`).join('')}
                         </div>
                     `;
-                    badge.classList.add('photo');
                     badge.textContent = 'WITH PHOTOS';
                 } else {
                     quotePhotos.innerHTML = '';
-                    badge.classList.remove('photo');
                     badge.textContent = 'DRAFT';
                 }
                 
-                const items = parseDescription(description || "Photo-based estimate");
-                
+                // Calculate totals
                 let subtotal = 0;
                 const lineItemsHtml = items.map(item => {
                     const cost = item.rate * item.qty;
@@ -805,7 +765,7 @@
                         <div class="line-item">
                             <div>
                                 <div class="item-category">${item.category}</div>
-                                <div class="item-name">${item.name} (${item.qty})</div>
+                                <div class="item-name">${item.name} (${item.qty} ${ratesDB[item.category][item.name].unit})</div>
                             </div>
                             <div class="item-price">$${cost.toLocaleString()}</div>
                         </div>
@@ -827,27 +787,26 @@
                 document.getElementById('generating').classList.remove('active');
                 document.getElementById('quoteContent').style.display = 'block';
                 
-            }, 1500);
+            }, 800);
         }
         
         function saveQuote() {
-            alert('In production, this would generate a PDF with photos. Use Ctrl+P / Cmd+P to print to PDF!');
+            alert('Use Ctrl+P / Cmd+P to print to PDF!');
         }
         
         function newQuote() {
             photos = [];
             document.getElementById('projectName').value = '';
-            document.getElementById('workDescription').value = '';
+            document.getElementById('notes').value = '';
             document.getElementById('markup').value = '25';
-            document.querySelectorAll('.finish-chip').forEach(c => c.classList.remove('selected'));
             renderPhotos();
-            document.getElementById('aiAnalysis').classList.remove('active');
+            renderScopeBuilder();
             document.getElementById('quoteContent').style.display = 'none';
             document.getElementById('emptyState').style.display = 'block';
         }
         
-        // Initialize Bay Area rates
-        updateRegionLabel();
+        // Initialize
+        renderScopeBuilder();
     </script>
 </body>
 </html>
