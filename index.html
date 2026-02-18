@@ -571,7 +571,7 @@
                 'Garage': { rate: 45, unit: 'sqft', desc: 'Attached garage' },
                 'Landscaping': { rate: 8, unit: 'sqft', desc: 'Basic landscaping' },
                 'Permits': { rate: 0.04, unit: 'percent', desc: '% of construction' },
-                'Impact Fees 25000,': { rate: unit: 'unit', desc: 'City fees' }
+                'Impact Fees': { rate: 25000, unit: 'unit', desc: 'City fees' }
             }
         };
         
@@ -756,11 +756,36 @@
                     badge.textContent = 'DRAFT';
                 }
                 
-                // Calculate totals
+                // Calculate totals - separate permits (percentage-based) from regular items
                 let subtotal = 0;
+                let permitCost = 0;
+                
                 const lineItemsHtml = items.map(item => {
-                    const cost = item.rate * item.qty;
-                    subtotal += cost;
+                    let cost;
+                    if (item.name === 'Permits') {
+                        // Permits calculated as percentage of subtotal
+                        cost = 0; // Will calculate after subtotal
+                    } else {
+                        cost = item.rate * item.qty;
+                        subtotal += cost;
+                    }
+                    return { ...item, cost };
+                }).join('');
+                
+                // Calculate permit as percentage of construction cost
+                const permitItem = items.find(i => i.name === 'Permits');
+                if (permitItem) {
+                    permitCost = subtotal * permitItem.rate;
+                    subtotal += permitCost;
+                }
+                
+                const allItemsHtml = items.map(item => {
+                    let cost;
+                    if (item.name === 'Permits') {
+                        cost = permitCost;
+                    } else {
+                        cost = item.rate * item.qty;
+                    }
                     return `
                         <div class="line-item">
                             <div>
@@ -776,7 +801,7 @@
                 const profit = subtotal * (markup / 100);
                 const total = subtotal + overhead + profit;
                 
-                document.getElementById('lineItems').innerHTML = lineItemsHtml;
+                document.getElementById('lineItems').innerHTML = allItemsHtml;
                 document.getElementById('totals').innerHTML = `
                     <div class="total-row"><span>Subtotal</span><span>$${subtotal.toLocaleString()}</span></div>
                     <div class="total-row"><span>Overhead (15%)</span><span>$${overhead.toLocaleString()}</span></div>
