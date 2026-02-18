@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArgoQuote Pro</title>
+    <title>BuilderQuote Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,14 +49,19 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: var(--primary);
-            border-radius: 10px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: 700;
-            font-size: 16px;
+            font-size: 20px;
+            position: relative;
+        }
+        
+        .logo-icon::before {
+            content: "📐";
+            font-size: 22px;
         }
         
         .logo-text { font-size: 20px; font-weight: 700; color: var(--dark); }
@@ -399,8 +404,8 @@
         <!-- Input Panel -->
         <div class="input-panel">
             <div class="logo">
-                <div class="logo-icon">AQ</div>
-                <div class="logo-text">ArgoQuote Pro</div>
+                <div class="logo-icon">BQ</div>
+                <div class="logo-text">BuilderQuote Pro</div>
             </div>
             
             <!-- Category Tabs -->
